@@ -5,9 +5,9 @@ spring:
     username: developer
     password: admin
   jpa:
+    open-in-view: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
       show-sql: false
-      

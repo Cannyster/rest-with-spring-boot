@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cannysters.model.Person;
+import br.com.cannysters.data.vo.v1.PersonVO;
 import br.com.cannysters.services.PersonService;
 
 @RestController
@@ -27,22 +27,22 @@ public class PersonController {
 	
 	@GetMapping(value = "/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE) 
-	public ResponseEntity<Person> findById(@PathVariable(value = "id")Long id) {
-		Person person = service.findById(id);
+	public ResponseEntity<PersonVO> findById(@PathVariable(value = "id")Long id) {
+		PersonVO person = service.findById(id);
 		return ResponseEntity.ok().body(person);
 	}
 	
 	@PostMapping(
 			produces = MediaType.APPLICATION_JSON_VALUE, // informa que este elemento vai ser exportado para JSON
 			consumes = MediaType.APPLICATION_JSON_VALUE) // informa que consome elementos JSON
-	public Person create(@RequestBody Person person) {		
+	public PersonVO create(@RequestBody PersonVO person) {		
 		return service.create(person);
 	}
 	
 	@PutMapping(
 			produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE) 
-	public Person update(@RequestBody Person person) {		
+	public PersonVO update(@RequestBody PersonVO person) {		
 		return service.update(person);
 	}
 	
@@ -53,7 +53,7 @@ public class PersonController {
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Person> findAll() {		
+	public List<PersonVO> findAll() {		
 		return service.findAll();
 	}
 	

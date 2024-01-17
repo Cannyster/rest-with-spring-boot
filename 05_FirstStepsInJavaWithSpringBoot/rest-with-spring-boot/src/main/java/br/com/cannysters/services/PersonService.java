@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.cannysters.data.vo.v1.PersonVO;
 import br.com.cannysters.exceptions.ResourceNotFoundException;
-import br.com.cannysters.mapper.DozerMapper;
+import br.com.cannysters.mapper.Mapper;
 import br.com.cannysters.model.Person;
 import br.com.cannysters.repository.PersonRepository;
 
@@ -24,7 +24,7 @@ public class PersonService {
 	public List<PersonVO> findAll() {
 		logger.info("Finding all persons!");
 		
-		return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+		return Mapper.parseListObjects(repository.findAll(), PersonVO.class);
 	}
 
 	public PersonVO findById(Long id) {
@@ -32,15 +32,15 @@ public class PersonService {
 		
 		var entity = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-		return DozerMapper.parseObject(entity, PersonVO.class);
+		return Mapper.parseObject(entity, PersonVO.class);
 				
 	}
 	
 	public PersonVO create(PersonVO personVo) {
 		logger.info("Creating new person!");
 		
-		var entity = DozerMapper.parseObject(personVo, Person.class); //Convertendo de PersonVo para Person 
-		var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class); // Convetendo de Person para PersonVo(depois de salvar no repositorio)
+		var entity = Mapper.parseObject(personVo, Person.class); //Convertendo de PersonVo para Person 
+		var vo = Mapper.parseObject(repository.save(entity), PersonVO.class); // Convetendo de Person para PersonVo(depois de salvar no repositorio)
 		return vo; // retornando o objeto convertido em PersonVo como resposta da requisição
 	}
 	
@@ -55,7 +55,7 @@ public class PersonService {
 		entity.setAddress(person.getAddress());
 		entity.setGender(person.getGender());
 		
-		var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+		var vo = Mapper.parseObject(repository.save(entity), PersonVO.class);
 		return vo;
 	}
 	

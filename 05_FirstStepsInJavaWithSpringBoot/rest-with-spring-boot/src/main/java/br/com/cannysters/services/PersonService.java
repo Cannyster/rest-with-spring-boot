@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cannysters.data.vo.v1.PersonVO;
+import br.com.cannysters.data.vo.v2.PersonVOV2;
 import br.com.cannysters.exceptions.ResourceNotFoundException;
 import br.com.cannysters.mapper.Mapper;
+import br.com.cannysters.mapper.custom.PersonMapper;
 import br.com.cannysters.model.Person;
 import br.com.cannysters.repository.PersonRepository;
 
@@ -18,6 +20,9 @@ public class PersonService {
 	
 	@Autowired
 	private PersonRepository repository;
+	
+	@Autowired
+	private PersonMapper mapper;
 
 	private Logger logger = Logger.getLogger(PersonService.class.getName());
 	
@@ -41,6 +46,14 @@ public class PersonService {
 		
 		var entity = Mapper.parseObject(personVo, Person.class); //Convertendo de PersonVo para Person 
 		var vo = Mapper.parseObject(repository.save(entity), PersonVO.class); // Convetendo de Person para PersonVo(depois de salvar no repositorio)
+		return vo; // retornando o objeto convertido em PersonVo como resposta da requisição
+	}
+	
+	public PersonVOV2 createV2(PersonVOV2 personVo) {
+		logger.info("Creating new person with V2!");
+		
+		var entity = mapper.convertVOToEntity(personVo); //Convertendo de PersonVo para Person 
+		var vo = mapper.convertEntityToVO(repository.save(entity)); // Convetendo de Person para PersonVo(depois de salvar no repositorio)
 		return vo; // retornando o objeto convertido em PersonVo como resposta da requisição
 	}
 	

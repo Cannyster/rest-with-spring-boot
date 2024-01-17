@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cannysters.data.vo.v1.PersonVO;
+import br.com.cannysters.data.vo.v2.PersonVOV2;
 import br.com.cannysters.services.PersonService;
 
 @RestController
@@ -37,6 +38,13 @@ public class PersonController {
 			consumes = MediaType.APPLICATION_JSON_VALUE) // informa que consome elementos JSON
 	public PersonVO create(@RequestBody PersonVO person) {		
 		return service.create(person);
+	}
+	
+	@PostMapping(value = "/v2",
+			produces = MediaType.APPLICATION_JSON_VALUE, // informa que este elemento vai ser exportado para JSON
+			consumes = MediaType.APPLICATION_JSON_VALUE) // informa que consome elementos JSON
+	public PersonVOV2 createV2(@RequestBody PersonVOV2 person) {		
+		return service.createV2(person);
 	}
 	
 	@PutMapping(

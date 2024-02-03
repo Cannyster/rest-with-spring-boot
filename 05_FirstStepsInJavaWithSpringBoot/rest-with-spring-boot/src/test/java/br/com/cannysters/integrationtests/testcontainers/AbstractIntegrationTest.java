@@ -14,7 +14,8 @@ import org.testcontainers.lifecycle.Startables;
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 public class AbstractIntegrationTest {
 
-	public class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext>{
+	static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext>{
+		
 		static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0.29");
 		
 		private static void startContainers() {
@@ -25,7 +26,7 @@ public class AbstractIntegrationTest {
 			return Map.of(
 					"spring.datasource.url", mysql.getJdbcUrl(),
 					"spring.datasource.username", mysql.getUsername(),
-					"spring.datasource.passwordl", mysql.getPassword()
+					"spring.datasource.password", mysql.getPassword()
 					);
 		}
 		
@@ -40,4 +41,5 @@ public class AbstractIntegrationTest {
 			enviroment.getPropertySources().addFirst(testcontainers);
 		}
 	}
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +52,7 @@ public class PersonController {
 		return service.findAll();
 	}
 	
+	@CrossOrigin(origins = "http://localhost:8080") // habilitando o cors apenas para local host 8080 nessa requisição apenas
 	@GetMapping(value = "/{id}",
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  } ) 
 	@Operation( summary = "Finds a Person", description = "Finds a Person", tags = {"People"}, 
@@ -69,6 +71,8 @@ public class PersonController {
 		return ResponseEntity.ok().body(person);
 	}
 	
+	
+	@CrossOrigin(origins = {"http://localhost:8080", "http://cannysters.com.br"})// cors com 2 origens permitidas
 	@PostMapping(
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML }, // informa que este elemento vai ser exportado para JSON, XML, YAML
 		consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML }) // informa que consome elementos JSON, XML, YAML
